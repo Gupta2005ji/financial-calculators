@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profit/Loss Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    /* Custom styles for hover animations */
+    .button-hover-effect {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .button-hover-effect:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .button-reset-effect {
+      transition: all 0.3s ease;
+    }
+    
+    .button-reset-effect:hover {
+      background-color: #f1f5f9;
+      transform: scale(1.03);
+    }
+    
+    .nav-link {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-link:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 50%;
+      background-color: #3b82f6;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-link:hover:after {
+      width: 80%;
+      left: 10%;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <nav class="py-3 bg-white border-b border-gray-200 fixed top-0 w-full z-10 shadow-sm">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center justify-center">
+        <div class="flex space-x-2 md:space-x-4">
+          <a href="index.html">
+            <span class="px-3 py-2 rounded-md text-sm font-medium cursor-pointer nav-link button-hover-effect text-gray-700 hover:bg-gray-100">
+              Percentage
+            </span>
+          </a>
+          
+          <a href="gst-calculator.html">
+            <span class="px-3 py-2 rounded-md text-sm font-medium cursor-pointer nav-link button-hover-effect text-gray-700 hover:bg-gray-100">
+              GST
+            </span>
+          </a>
+          
+          <a href="profit-loss-calculator.html">
+            <span class="px-3 py-2 rounded-md text-sm font-medium cursor-pointer nav-link button-hover-effect bg-blue-100 text-blue-700">
+              Profit/Loss
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="min-h-screen pt-20 pb-8 px-4">
+    <div class="w-full max-w-4xl mx-auto p-4">
+      <!-- Header Section -->
+      <header class="mb-6">
+        <!-- Breadcrumb Navigation -->
+        <nav class="flex mb-4 text-sm">
+          <a href="index.html">
+            <span class="text-blue-600 hover:text-blue-800 flex items-center button-hover-effect">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1">
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+              Home
+            </span>
+          </a>
+          <span class="mx-2 text-gray-500">/</span>
+          <span class="text-neutral-800">Profit/Loss Calculator</span>
+        </nav>
+        
+        <h1 class="text-3xl md:text-4xl font-bold text-blue-700 mb-2 text-center">
+          Profit/Loss Calculator
+        </h1>
+        <p class="text-neutral-600 text-center">Calculate profit, loss, and their percentages instantly.</p>
+      </header>
+
+      <div class="bg-white rounded-lg shadow-sm p-6">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <div class="space-y-4">
+              <div>
+                <label for="cost-price" class="text-sm font-medium text-neutral-700 mb-1 block">
+                  Cost Price (CP)
+                </label>
+                <input
+                  id="cost-price"
+                  type="number"
+                  placeholder="Enter cost price"
+                  class="w-full button-hover-effect border border-gray-300 rounded-md p-2"
+                />
+              </div>
+
+              <div>
+                <label for="selling-price" class="text-sm font-medium text-neutral-700 mb-1 block">
+                  Selling Price (SP)
+                </label>
+                <input
+                  id="selling-price"
+                  type="number"
+                  placeholder="Enter selling price"
+                  class="w-full button-hover-effect border border-gray-300 rounded-md p-2"
+                />
+              </div>
+
+              <button 
+                id="reset-calculator"
+                class="mt-2 bg-white border border-gray-200 hover:bg-gray-50 text-neutral-800 flex items-center gap-1 button-reset-effect p-2 rounded-md"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1">
+                  <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                  <path d="M3 3v5h5"></path>
+                  <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path>
+                  <path d="M16 21h5v-5"></path>
+                </svg>
+                Reset
+              </button>
+            </div>
+          </div>
+
+          <div id="result-container" class="rounded-lg p-6 border bg-blue-50 border-blue-100">
+            <h3 class="text-lg font-semibold text-blue-700 mb-4">Result</h3>
+            
+            <div class="space-y-4" id="result-display">
+              <div id="empty-result" class="text-neutral-600 text-sm">
+                Enter cost price and selling price to see the result.
+              </div>
+              
+              <div id="result-data" class="hidden">
+                <div>
+                  <p class="text-sm text-neutral-600 mb-1">Status:</p>
+                  <p class="text-xl font-semibold" id="status"></p>
+                </div>
+                
+                <div>
+                  <p class="text-sm text-neutral-600 mb-1">Amount:</p>
+                  <p class="text-xl font-semibold" id="amount"></p>
+                </div>
+                
+                <div>
+                  <p class="text-sm text-neutral-600 mb-1">Percentage:</p>
+                  <p class="text-2xl font-semibold" id="percentage"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Formula explanation -->
+        <div class="mt-6 p-4 bg-gray-50 rounded-md border border-gray-200 text-sm">
+          <h4 class="font-medium text-neutral-700 mb-2">Formulas Used:</h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <p class="font-medium">For Profit:</p>
+              <ul class="list-disc list-inside text-neutral-600 space-y-1">
+                <li>Profit = Selling Price - Cost Price</li>
+                <li>Profit % = (Profit / Cost Price) × 100</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium">For Loss:</p>
+              <ul class="list-disc list-inside text-neutral-600 space-y-1">
+                <li>Loss = Cost Price - Selling Price</li>
+                <li>Loss % = (Loss / Cost Price) × 100</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Description Section -->
+      <div class="mt-8 bg-gray-50 shadow-sm rounded-lg p-6">
+        <h2 class="text-xl font-semibold text-blue-700 mb-3">What is Profit and Loss?</h2>
+        <p class="text-sm text-neutral-700 mb-4">
+          In business and finance, profit and loss refer to the gains and deficits incurred during transactions. 
+          When you sell an item for more than what you paid for it, you make a profit. Conversely, if you sell 
+          for less than what you paid, you incur a loss.
+        </p>
+        
+        <h2 class="text-xl font-semibold text-blue-700 mb-3 mt-6">How to Use the Profit/Loss Calculator</h2>
+        <div class="space-y-4 text-neutral-700">
+          <div>
+            <h3 class="font-medium mb-1">Understanding the Inputs</h3>
+            <p class="text-sm">
+              <strong>Cost Price (CP):</strong> The price at which you purchased the item or the amount spent to produce it.
+              <br />
+              <strong>Selling Price (SP):</strong> The price at which you sold or plan to sell the item.
+            </p>
+          </div>
+          
+          <div>
+            <h3 class="font-medium mb-1">Interpreting the Results</h3>
+            <p class="text-sm">
+              <strong>Status:</strong> Shows if you've made a profit or incurred a loss.
+              <br />
+              <strong>Amount:</strong> The actual amount of profit or loss in currency units.
+              <br />
+              <strong>Percentage:</strong> The profit or loss expressed as a percentage of the cost price.
+            </p>
+          </div>
+        </div>
+        
+        <div class="mt-6 p-4 bg-blue-50 rounded-md border border-blue-100">
+          <h3 class="font-medium text-blue-700 mb-2">Common Applications</h3>
+          <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-neutral-700">
+            <li>• Business inventory pricing strategies</li>
+            <li>• Stock market and investment calculations</li>
+            <li>• Retail markup and markdown decisions</li>
+            <li>• Real estate investment analysis</li>
+            <li>• Small business financial planning</li>
+            <li>• Evaluating discount and sale effectiveness</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer Navigation -->
+      <footer class="mt-8 pt-6 border-t border-gray-200">
+        <div class="text-sm text-neutral-600">
+          <div class="flex justify-center space-x-6 mb-4">
+            <a href="index.html">
+              <span class="text-blue-600 hover:text-blue-800 button-hover-effect">Percentage Calculator</span>
+            </a>
+            <a href="gst-calculator.html">
+              <span class="text-blue-600 hover:text-blue-800 button-hover-effect">GST Calculator</span>
+            </a>
+            <a href="profit-loss-calculator.html">
+              <span class="text-blue-600 hover:text-blue-800 button-hover-effect">Profit/Loss Calculator</span>
+            </a>
+          </div>
+          <div class="text-center text-gray-500">
+            <p>© 2025 Percentage Calculator. All rights reserved.</p>
+            <p class="mt-1">A simple tool for your calculation needs.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    // DOM elements
+    const costPriceInput = document.getElementById('cost-price');
+    const sellingPriceInput = document.getElementById('selling-price');
+    const resetButton = document.getElementById('reset-calculator');
+    const resultContainer = document.getElementById('result-container');
+    const emptyResult = document.getElementById('empty-result');
+    const resultData = document.getElementById('result-data');
+    const statusElem = document.getElementById('status');
+    const amountElem = document.getElementById('amount');
+    const percentageElem = document.getElementById('percentage');
+
+    // State variables
+    let costPrice = "";
+    let sellingPrice = "";
+    let isProfitOrLoss = "";
+    let amount = "";
+    let percentage = "";
+
+    // Calculate profit or loss
+    function calculateProfitOrLoss() {
+      if (costPrice && sellingPrice) {
+        const cp = parseFloat(costPrice);
+        const sp = parseFloat(sellingPrice);
+        
+        if (!isNaN(cp) && !isNaN(sp) && cp > 0) {
+          if (sp > cp) {
+            // Profit
+            const profitAmount = sp - cp;
+            const profitPercentage = (profitAmount / cp) * 100;
+            
+            isProfitOrLoss = "profit";
+            amount = profitAmount.toFixed(2);
+            percentage = profitPercentage.toFixed(2);
+            
+            // Update UI
+            statusElem.textContent = "✓ Profit";
+            statusElem.className = "text-xl font-semibold text-green-600";
+            amountElem.textContent = "₹" + amount;
+            amountElem.className = "text-xl font-semibold text-green-600";
+            percentageElem.textContent = percentage + "%";
+            percentageElem.className = "text-2xl font-semibold text-green-600";
+            
+            resultContainer.className = "rounded-lg p-6 border bg-green-50 border-green-100";
+          } else if (sp < cp) {
+            // Loss
+            const lossAmount = cp - sp;
+            const lossPercentage = (lossAmount / cp) * 100;
+            
+            isProfitOrLoss = "loss";
+            amount = lossAmount.toFixed(2);
+            percentage = lossPercentage.toFixed(2);
+            
+            // Update UI
+            statusElem.textContent = "✗ Loss";
+            statusElem.className = "text-xl font-semibold text-red-600";
+            amountElem.textContent = "₹" + amount;
+            amountElem.className = "text-xl font-semibold text-red-600";
+            percentageElem.textContent = percentage + "%";
+            percentageElem.className = "text-2xl font-semibold text-red-600";
+            
+            resultContainer.className = "rounded-lg p-6 border bg-red-50 border-red-100";
+          } else {
+            // No profit, no loss
+            isProfitOrLoss = "none";
+            amount = "0.00";
+            percentage = "0.00";
+            
+            // Update UI
+            statusElem.textContent = "No Profit/Loss";
+            statusElem.className = "text-xl font-semibold text-blue-700";
+            amountElem.textContent = "₹" + amount;
+            amountElem.className = "text-xl font-semibold text-blue-700";
+            percentageElem.textContent = percentage + "%";
+            percentageElem.className = "text-2xl font-semibold text-blue-700";
+            
+            resultContainer.className = "rounded-lg p-6 border bg-blue-50 border-blue-100";
+          }
+          
+          // Show results
+          emptyResult.classList.add('hidden');
+          resultData.classList.remove('hidden');
+        } else {
+          resetResults();
+        }
+      } else {
+        resetResults();
+      }
+    }
+
+    // Reset results
+    function resetResults() {
+      isProfitOrLoss = "";
+      amount = "";
+      percentage = "";
+      
+      emptyResult.classList.remove('hidden');
+      resultData.classList.add('hidden');
+      resultContainer.className = "rounded-lg p-6 border bg-blue-50 border-blue-100";
+    }
+
+    // Reset all fields
+    function resetCalculator() {
+      costPriceInput.value = "";
+      sellingPriceInput.value = "";
+      costPrice = "";
+      sellingPrice = "";
+      resetResults();
+    }
+
+    // Event listeners
+    costPriceInput.addEventListener('input', (e) => {
+      costPrice = e.target.value;
+      calculateProfitOrLoss();
+    });
+
+    sellingPriceInput.addEventListener('input', (e) => {
+      sellingPrice = e.target.value;
+      calculateProfitOrLoss();
+    });
+
+    resetButton.addEventListener('click', resetCalculator);
+  </script>
+</body>
+</html>
