@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Age Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    /* Custom styles for hover animations */
+    .button-hover-effect {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .button-hover-effect:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .button-reset-effect {
+      transition: all 0.3s ease;
+    }
+    
+    .button-reset-effect:hover {
+      background-color: #f1f5f9;
+      transform: scale(1.03);
+    }
+    
+    .nav-link {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-link:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 50%;
+      background-color: #3b82f6;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-link:hover:after {
+      width: 80%;
+      left: 10%;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <nav class="py-3 bg-white border-b border-gray-200 fixed top-0 w-full z-10 shadow-sm">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center justify-center">
+        <div class="flex space-x-2 md:space-x-4">
+          <a href="index.html">
+            <span class="px-3 py-2 rounded-md text-sm font-medium cursor-pointer nav-link button-hover-effect text-gray-700 hover:bg-gray-100">
+              Percentage
+            </span>
+          </a>
+          
+          <a href="gst-calculator.html">
+            <span class="px-3 py-2 rounded-md text-sm font-medium cursor-pointer nav-link button-hover-effect text-gray-700 hover:bg-gray-100">
+              GST
+            </span>
+          </a>
+          
+          <a href="profit-loss-calculator.html">
+            <span class="px-3 py-2 rounded-md text-sm font-medium cursor-pointer nav-link button-hover-effect text-gray-700 hover:bg-gray-100">
+              Profit/Loss
+            </span>
+          </a>
+          
+          <a href="age-calculator.html">
+            <span class="px-3 py-2 rounded-md text-sm font-medium cursor-pointer nav-link button-hover-effect bg-blue-100 text-blue-700">
+              Age
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="min-h-screen pt-20 pb-8 px-4">
+    <div class="w-full max-w-4xl mx-auto p-4">
+      <!-- Header Section -->
+      <header class="mb-6">
+        <!-- Breadcrumb Navigation -->
+        <nav class="flex mb-4 text-sm">
+          <a href="index.html">
+            <span class="text-blue-600 hover:text-blue-800 flex items-center button-hover-effect">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1">
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+              Home
+            </span>
+          </a>
+          <span class="mx-2 text-gray-500">/</span>
+          <span class="text-neutral-800">Age Calculator</span>
+        </nav>
+        
+        <h1 class="text-3xl md:text-4xl font-bold text-blue-700 mb-2 text-center">
+          Age Calculator
+        </h1>
+        <p class="text-neutral-600 text-center">Calculate age in years, months, and days accurately.</p>
+      </header>
+
+      <div class="bg-white rounded-lg shadow-sm p-6">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <div class="space-y-4">
+              <div>
+                <label for="birth-date" class="text-sm font-medium text-neutral-700 mb-1 block">
+                  Birth Date
+                </label>
+                <input
+                  id="birth-date"
+                  type="date"
+                  class="w-full button-hover-effect border border-gray-300 rounded-md p-2"
+                />
+              </div>
+
+              <div>
+                <label for="calculation-date" class="text-sm font-medium text-neutral-700 mb-1 block">
+                  Calculation Date (Optional)
+                </label>
+                <input
+                  id="calculation-date"
+                  type="date"
+                  class="w-full button-hover-effect border border-gray-300 rounded-md p-2"
+                  placeholder="Leave empty for today's date"
+                />
+                <p class="text-xs text-neutral-500 mt-1">Leave empty to use today's date</p>
+              </div>
+
+              <button 
+                id="reset-calculator"
+                class="mt-2 bg-white border border-gray-200 hover:bg-gray-50 text-neutral-800 flex items-center gap-1 button-reset-effect p-2 rounded-md"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1">
+                  <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                  <path d="M3 3v5h5"></path>
+                  <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path>
+                  <path d="M16 21h5v-5"></path>
+                </svg>
+                Reset
+              </button>
+            </div>
+          </div>
+
+          <div id="result-container" class="rounded-lg p-6 border bg-blue-50 border-blue-100">
+            <h3 class="text-lg font-semibold text-blue-700 mb-4">Result</h3>
+            
+            <div class="space-y-4" id="result-display">
+              <div id="empty-result" class="text-neutral-600 text-sm">
+                Enter birth date to see the calculated age.
+              </div>
+              
+              <div id="result-data" class="hidden space-y-4">
+                <div>
+                  <p class="text-sm text-neutral-600 mb-1">Age:</p>
+                  <p class="text-2xl font-semibold text-blue-700" id="age-years"></p>
+                </div>
+                
+                <div>
+                  <p class="text-sm text-neutral-600 mb-1">Detailed Age:</p>
+                  <div class="grid grid-cols-3 gap-2 text-center">
+                    <div class="bg-white p-3 rounded-lg border border-blue-100">
+                      <span class="block text-xl font-semibold text-blue-700" id="total-years">0</span>
+                      <span class="text-xs text-gray-500">Years</span>
+                    </div>
+                    <div class="bg-white p-3 rounded-lg border border-blue-100">
+                      <span class="block text-xl font-semibold text-blue-700" id="total-months">0</span>
+                      <span class="text-xs text-gray-500">Months</span>
+                    </div>
+                    <div class="bg-white p-3 rounded-lg border border-blue-100">
+                      <span class="block text-xl font-semibold text-blue-700" id="total-days">0</span>
+                      <span class="text-xs text-gray-500">Days</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="pt-2">
+                  <p class="text-sm text-neutral-600 mb-2">Also equal to:</p>
+                  <div class="grid grid-cols-2 gap-2 text-sm">
+                    <div class="bg-white p-2 rounded border border-gray-100">
+                      <span id="total-months-only">0</span> months
+                    </div>
+                    <div class="bg-white p-2 rounded border border-gray-100">
+                      <span id="total-weeks">0</span> weeks
+                    </div>
+                    <div class="bg-white p-2 rounded border border-gray-100">
+                      <span id="total-days-only">0</span> days
+                    </div>
+                    <div class="bg-white p-2 rounded border border-gray-100">
+                      <span id="total-hours">0</span> hours
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Next birthday section -->
+        <div id="next-birthday" class="mt-6 p-4 bg-blue-50 rounded-md border border-blue-100 hidden">
+          <h4 class="font-medium text-blue-700 mb-2">Next Birthday</h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <p class="text-sm text-neutral-600 mb-1">Next birthday on:</p>
+              <p class="font-semibold" id="next-birthday-date"></p>
+            </div>
+            <div>
+              <p class="text-sm text-neutral-600 mb-1">Days until next birthday:</p>
+              <p class="font-semibold" id="days-to-birthday"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Description Section -->
+      <div class="mt-8 bg-gray-50 shadow-sm rounded-lg p-6">
+        <h2 class="text-xl font-semibold text-blue-700 mb-3">What is an Age Calculator?</h2>
+        <p class="text-sm text-neutral-700 mb-4">
+          An age calculator is a tool that calculates the precise age of a person in years, months, and days based on their birth date.
+          It provides an accurate measurement of time elapsed since birth, accounting for leap years and varying month lengths.
+        </p>
+        
+        <h2 class="text-xl font-semibold text-blue-700 mb-3 mt-6">How to Use the Age Calculator</h2>
+        <div class="space-y-4 text-neutral-700">
+          <div>
+            <h3 class="font-medium mb-1">Understanding the Inputs</h3>
+            <p class="text-sm">
+              <strong>Birth Date:</strong> The date of birth for which you want to calculate the age.
+              <br />
+              <strong>Calculation Date:</strong> The date as of which you want to calculate the age. If left empty, today's date will be used.
+            </p>
+          </div>
+          
+          <div>
+            <h3 class="font-medium mb-1">Interpreting the Results</h3>
+            <p class="text-sm">
+              <strong>Age:</strong> The age in years, months, and days format.
+              <br />
+              <strong>Detailed Age:</strong> Breakdown of the age into years, months, and days.
+              <br />
+              <strong>Alternative Units:</strong> The age converted into total months, weeks, days, and hours.
+              <br />
+              <strong>Next Birthday:</strong> Information about the upcoming birthday and days remaining.
+            </p>
+          </div>
+        </div>
+        
+        <div class="mt-6 p-4 bg-blue-50 rounded-md border border-blue-100">
+          <h3 class="font-medium text-blue-700 mb-2">Common Applications</h3>
+          <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-neutral-700">
+            <li>• Verifying age eligibility requirements</li>
+            <li>• Planning birthday celebrations</li>
+            <li>• Tracking developmental milestones</li>
+            <li>• Medical and healthcare assessments</li>
+            <li>• Legal documentation preparation</li>
+            <li>• Insurance and retirement planning</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Footer Navigation -->
+      <footer class="mt-8 pt-6 border-t border-gray-200">
+        <div class="text-sm text-neutral-600">
+          <div class="flex justify-center space-x-6 mb-4">
+            <a href="index.html">
+              <span class="text-blue-600 hover:text-blue-800 button-hover-effect">Percentage Calculator</span>
+            </a>
+            <a href="gst-calculator.html">
+              <span class="text-blue-600 hover:text-blue-800 button-hover-effect">GST Calculator</span>
+            </a>
+            <a href="profit-loss-calculator.html">
+              <span class="text-blue-600 hover:text-blue-800 button-hover-effect">Profit/Loss Calculator</span>
+            </a>
+            <a href="age-calculator.html">
+              <span class="text-blue-600 hover:text-blue-800 button-hover-effect">Age Calculator</span>
+            </a>
+          </div>
+          <div class="text-center text-gray-500">
+            <p>© 2025 Calculator Hub. All rights reserved.</p>
+            <p class="mt-1">A simple tool for your calculation needs.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    // DOM elements
+    const birthDateInput = document.getElementById('birth-date');
+    const calculationDateInput = document.getElementById('calculation-date');
+    const resetButton = document.getElementById('reset-calculator');
+    const resultContainer = document.getElementById('result-container');
+    const emptyResult = document.getElementById('empty-result');
+    const resultData = document.getElementById('result-data');
+    const ageYearsElem = document.getElementById('age-years');
+    const totalYearsElem = document.getElementById('total-years');
+    const totalMonthsElem = document.getElementById('total-months');
+    const totalDaysElem = document.getElementById('total-days');
+    const totalMonthsOnlyElem = document.getElementById('total-months-only');
+    const totalWeeksElem = document.getElementById('total-weeks');
+    const totalDaysOnlyElem = document.getElementById('total-days-only');
+    const totalHoursElem = document.getElementById('total-hours');
+    const nextBirthdaySection = document.getElementById('next-birthday');
+    const nextBirthdayDateElem = document.getElementById('next-birthday-date');
+    const daysToBirthdayElem = document.getElementById('days-to-birthday');
+
+    // State variables
+    let birthDate = "";
+    let calculationDate = "";
+
+    // Set today's date as default calculation date (but don't show it in the input)
+    const today = new Date();
+    const todayFormatted = formatDate(today);
+
+    // Calculate age
+    function calculateAge() {
+      if (birthDate) {
+        const birthDateObj = new Date(birthDate);
+        let calcDateObj;
+        
+        if (calculationDate) {
+          calcDateObj = new Date(calculationDate);
+        } else {
+          calcDateObj = new Date(); // Today
+        }
+        
+        // Check if birth date is in the future
+        if (birthDateObj > calcDateObj) {
+          showError("Birth date cannot be in the future!");
+          return;
+        }
+        
+        const ageDetails = getAgeDetails(birthDateObj, calcDateObj);
+        const monthsOnly = Math.floor(ageDetails.totalDays / 30.4375); // Approximate
+        const weeksOnly = Math.floor(ageDetails.totalDays / 7);
+        const hoursOnly = Math.floor(ageDetails.totalDays * 24);
+        
+        // Update UI
+        ageYearsElem.textContent = `${ageDetails.years} years, ${ageDetails.months} months, ${ageDetails.days} days`;
+        totalYearsElem.textContent = ageDetails.years;
+        totalMonthsElem.textContent = ageDetails.months;
+        totalDaysElem.textContent = ageDetails.days;
+        totalMonthsOnlyElem.textContent = monthsOnly;
+        totalWeeksElem.textContent = weeksOnly;
+        totalDaysOnlyElem.textContent = Math.floor(ageDetails.totalDays);
+        totalHoursElem.textContent = hoursOnly.toLocaleString();
+        
+        // Calculate next birthday
+        const nextBirthdayInfo = getNextBirthday(birthDateObj, calcDateObj);
+        nextBirthdayDateElem.textContent = formatDate(nextBirthdayInfo.date);
+        daysToBirthdayElem.textContent = `${nextBirthdayInfo.daysRemaining} days`;
+        
+        // Show results
+        emptyResult.classList.add('hidden');
+        resultData.classList.remove('hidden');
+        nextBirthdaySection.classList.remove('hidden');
+        resultContainer.className = "rounded-lg p-6 border bg-blue-50 border-blue-100";
+      } else {
+        resetResults();
+      }
+    }
+
+    // Reset results
+    function resetResults() {
+      emptyResult.classList.remove('hidden');
+      resultData.classList.add('hidden');
+      nextBirthdaySection.classList.add('hidden');
+      resultContainer.className = "rounded-lg p-6 border bg-blue-50 border-blue-100";
+    }
+
+    // Reset all fields
+    function resetCalculator() {
+      birthDateInput.value = "";
+      calculationDateInput.value = "";
+      birthDate = "";
+      calculationDate = "";
+      resetResults();
+    }
+
+    // Show error
+    function showError(message) {
+      emptyResult.textContent = message;
+      emptyResult.classList.remove('hidden');
+      resultData.classList.add('hidden');
+      nextBirthdaySection.classList.add('hidden');
+      resultContainer.className = "rounded-lg p-6 border bg-red-50 border-red-100";
+    }
+
+    // Get detailed age calculations
+    function getAgeDetails(birthDate, currentDate) {
+      let years = currentDate.getFullYear() - birthDate.getFullYear();
+      let months = currentDate.getMonth() - birthDate.getMonth();
+      let days = currentDate.getDate() - birthDate.getDate();
+      
+      // Adjust for negative days (borrowing from months)
+      if (days < 0) {
+        months--;
+        // Get the last day of the previous month
+        const lastDayOfLastMonth = new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth(),
+          0
+        ).getDate();
+        days += lastDayOfLastMonth;
+      }
+      
+      // Adjust for negative months (borrowing from years)
+      if (months < 0) {
+        years--;
+        months += 12;
+      }
+      
+      // Calculate total days for other calculations
+      const diffTime = Math.abs(currentDate - birthDate);
+      const totalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      
+      return {
+        years,
+        months,
+        days,
+        totalDays
+      };
+    }
+
+    // Get next birthday information
+    function getNextBirthday(birthDate, currentDate) {
+      const currentYear = currentDate.getFullYear();
+      
+      // Create a date for this year's birthday
+      let nextBirthday = new Date(
+        currentYear,
+        birthDate.getMonth(),
+        birthDate.getDate()
+      );
+      
+      // If the birthday has already occurred this year, use next year's birthday
+      if (nextBirthday < currentDate) {
+        nextBirthday = new Date(
+          currentYear + 1,
+          birthDate.getMonth(),
+          birthDate.getDate()
+        );
+      }
+      
+      // Calculate days remaining
+      const diffTime = Math.abs(nextBirthday - currentDate);
+      const daysRemaining = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      
+      return {
+        date: nextBirthday,
+        daysRemaining
+      };
+    }
+
+    // Format date as DD-MM-YYYY
+    function formatDate(date) {
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      
+      const monthNames = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+      ];
+      
+      return `${day} ${monthNames[date.getMonth()]} ${year}`;
+    }
+
+    // Event listeners
+    birthDateInput.addEventListener('change', (e) => {
+      birthDate = e.target.value;
+      calculateAge();
+    });
+
+    calculationDateInput.addEventListener('change', (e) => {
+      calculationDate = e.target.value;
+      calculateAge();
+    });
+
+    resetButton.addEventListener('click', resetCalculator);
+  </script>
+</body>
+</html>
